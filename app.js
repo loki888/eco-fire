@@ -11,10 +11,10 @@ const express = require("express"),
     //ajax = require("node.ajax"),
     port = 3000,
     request = require('request'),
-    parseWeather = require('./parseWeatherReq'),
-    url = 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=541bc45586c376137568151a5f67bafe'; // http://www.mysite.ru/index.php
-    let answer = {},
-        tempC, humidity, wind;
+    parseWeather = require('./calculation/parseWeatherReq');
+    // url = 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=541bc45586c376137568151a5f67bafe'; // http://www.mysite.ru/index.php
+    //let answer = {},
+    //    tempC, humidity, wind;
 
 
 

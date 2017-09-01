@@ -3,8 +3,8 @@ const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
-    Weather = require("./models/fire_risk-data-model"),
-    Temperature = require("./models/Temperature.model"),
+    Weather = require("../models/fire_risk-data-model"),
+    Temperature = require("../models/Temperature.model"),
     cron = require('node-cron'),
     //ajax = require("node.ajax"),
     port = 3000,
@@ -12,7 +12,11 @@ const express = require("express"),
     axios   = require('axios'),
    
    
-    url = 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=541bc45586c376137568151a5f67bafe'; // http://www.mysite.ru/index.php
+
+    CITY = 'zhytomyr',
+
+    url = 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=541bc45586c376137568151a5f67bafe', // http://www.mysite.ru/index.php
+    url2 = `http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/${CITY}.json`;
     let answer = {},
         tempC, humidity, wind;
 
@@ -48,44 +52,13 @@ const express = require("express"),
       //    }); 
 
 
-        /*  var parseWeather = cron.schedule('* * * * * *', function(){
-          
-          axios.get(url)
-          .then(function (response) {
-            //відразу отримавши дані слід провести розрахунок пожежного ризику і додати до документу бази даних на льоту у змінну
-            // змінну додати разом із погодними змінними до об'єкту і всі їх разом записати в новий документ, який зберегти у коллекцію.
-             let tempC = response.data.main["temp"];
-             let somedata = response.data;
-             
-            console.log(`It's currently ${tempC}.`);
 
-            let tempData = new Temperature();
-            tempData.temperature = tempC;
-         
-            tempData.save(function(err, temperature){
-         if (err) {console.log('ERRROR!!!!');} else {
-             console.log(temperature);
-             
-         }
-         
-            })
-
-
-
-
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-       
-           
-          
-       }); 
- */
 
 
   var parseWeather = cron.schedule('* * * * * *', function(){
-          var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';
+          // var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';
+
+          // Рядком нижче необхідно заключити код в цикл який буде шукати міста в масиві даних і встроювати їх в url2, після чого писати в базу даних.
           axios.get(url2)
           .then(function (response) {
             //відразу отримавши дані слід провести розрахунок пожежного ризику і додати до документу бази даних на льоту у змінну
@@ -120,15 +93,11 @@ const express = require("express"),
          
             })
 
-
-
-
           })
           .catch(function (error) {
             console.log(error);
           });
        
-           
           
        }); 
  
