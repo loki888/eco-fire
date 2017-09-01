@@ -1,0 +1,48 @@
+{
+  "name": "eco-fire-map",
+  "version": "1.0.0",
+  "description": "Plaing around with Node Express MongoDb and GIS technologies)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loki888/eco-fire.git"
+  },
+  "keywords": [
+    "wild",
+    "fire",
+    "fire",
+    "ecology",
+    "using",
+    "GIS",
+    "for",
+    "predict",
+    "fire",
+    "fire",
+    "risk",
+    "map",
+    "of",
+    "Ukraine"
+  ],
+  "author": "Serhii Sidorenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loki888/eco-fire/issues"
+  },
+  "homepage": "https://github.com/loki888/eco-fire#readme",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.11.8",
+    "node-cron": "^1.2.1",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
