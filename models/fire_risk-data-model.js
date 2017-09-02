@@ -11,6 +11,7 @@ const wetherSchema = new Schema({
     humidity: Number,
     temperature: Number,
     dewpoint: Number,
+    windSpeed: Number,
     date: { type: Date, default: Date.now },
     fireRisk: { type: Number, default: 0 },
 });
