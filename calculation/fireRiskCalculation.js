@@ -15,6 +15,7 @@ exports.fireRiskCalculation = function(){
     let d = dewpoint;
     let fireRiskYesterday;
 
+    // Формула розрахунку комплексного показника за Гуменюком В.
     fireRisk = (Kp * fireRiskYesterday) + Kw * T * (T - d);
     return fireRisk;
 };
