@@ -17,8 +17,8 @@ const express = require("express"),
 
     url = 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=541bc45586c376137568151a5f67bafe', // http://www.mysite.ru/index.php
     url2 = `http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/${CITY}.json`;
-    let answer = {},
-        tempC, humidity, wind;
+  /*   let answer = {},
+        tempC, humidity, wind; */
 
 
       // var parseWeather = cron.schedule('* * * * * *', function(){
@@ -56,27 +56,29 @@ const express = require("express"),
 
 
   var parseWeather = cron.schedule('* * * * * *', function(){
+
+    console.log('Відповідь стороннього сервера з даними щодо погоди насьогодні');
           // var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';
 
           // Рядком нижче необхідно заключити код в цикл який буде шукати міста в масиві даних і встроювати їх в url2, після чого писати в базу даних.
-          axios.get(url2)
+/*           axios.get(url2)
           .then(function (response) {
             //відразу отримавши дані слід провести розрахунок пожежного ризику і додати до документу бази даних на льоту у змінну
             // змінну додати разом із погодними змінними до об'єкту і всі їх разом записати в новий документ, який зберегти у коллекцію.
             
-            let temperature, district, perticipetion, humidity, dewpoint;
+            let temperature, district, perticipetion, humidity, dewpoint, windSpeed;
             
 
-            temperature = response.data.current_observation.temp_c;
-            district = response.data.current_observation.display_location.city;
+            temperature   = response.data.current_observation.temp_c;
+            district      = response.data.current_observation.display_location.city;
             perticipetion = response.data.current_observation.precip_today_metric;
-            humidity = response.data.current_observation.temp_c;
-            dewpoint = response.data.current_observation.dewpoint_c;
-           
+            humidity      = response.data.current_observation.temp_c;
+            dewpoint      = response.data.current_observation.dewpoint_c;
+            windSpeed     = response.data.current_observation.wind_kph;
 
             
-            console.log(`It's currently ${temperature}.`);
-
+           // console.log(`It's currently ${temperature}.`);
+           
 //Create a document from Weather Schema
             let currentWeather = new Weather();
             currentWeather.temperature    = temperature;
@@ -84,7 +86,9 @@ const express = require("express"),
             currentWeather.perticipetion  = perticipetion;
             currentWeather.humidity       = humidity;
             currentWeather.dewpoint       = dewpoint;
-         
+            currentWeather.windSpeed      = (windSpeed * 1000) / 3600;  // швидкість вітру в метрах за секунду
+
+
             currentWeather.save(function(err, weather){
          if (err) {console.log('ERRROR!!!!');} else {
              console.log(weather);
@@ -96,7 +100,7 @@ const express = require("express"),
           })
           .catch(function (error) {
             console.log(error);
-          });
+          }); */
        
           
        }); 
