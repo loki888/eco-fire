@@ -12,15 +12,6 @@ const express = require("express"),
     port = 3000,
     request = require('request'),
     parseWeather = require('./calculation/parseWeatherReq');
-    // url = 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=541bc45586c376137568151a5f67bafe'; // http://www.mysite.ru/index.php
-    //let answer = {},
-    //    tempC, humidity, wind;
-
-
-
-   
-   
-
 
 
 var promise = mongoose.connect('mongodb://localhost/eco_fire', {
@@ -51,13 +42,6 @@ app.get("/", function(req, res) {
 app.get("/map", function(req, res) {
     res.send("It will be a map soon!)");
 });
-
-
-
-
-
-
-
 
 
 
