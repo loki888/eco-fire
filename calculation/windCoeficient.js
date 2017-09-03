@@ -9,7 +9,7 @@ exports.windCoefCulc = function(windSpeed){
 // k = -0.0002*(x**3)+ 0.0038*(x**2)+ 0.0226*x + 0.9888 (поліном третього порядку) R2 = 0.999;
 let windCoef;
 windSpeed = windSpeed - 0;
-windCoef = -0.0002*(windSpeed**3) + 0.0038*(windSpeed**2)+0.0226*windSpeed + 0.9888;
+windCoef = -0.0002*(Math.pow(windSpeed, 3)) + 0.0038*(windSpeed*windSpeed)+0.0226*windSpeed + 0.9888;
 
 // Проводимо перевірку на перевищення допустимих значень коефіцієнта:
     if (windCoef > 1.48) {

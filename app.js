@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
@@ -11,8 +11,14 @@ const express = require("express"),
     //ajax = require("node.ajax"),
     port = 3000,
     request = require('request'),
-    parseWeather = require('./calculation/parseWeatherReq');
+    parseWeather = require('./calculation/parseWeatherReq'),
+    K_wind = require("./calculation/windCoeficient"),
+    K_pertisipation = require("./calculation/patisipationCoeficient"),
+    fireRiskCalculation = require("./calculation/fireRiskCalculation");
 
+
+
+    
 
 var promise = mongoose.connect('mongodb://localhost/eco_fire', {
   useMongoClient: true,
