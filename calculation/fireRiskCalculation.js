@@ -17,14 +17,39 @@ exports.fireRiskCalculation = function(){
     let Kp = 1.4;
     let T = 15.6;
     let d = 7;
+    let fireRiskYesterday;
+    //let query = Weather.find({}, {_id: 0}).sort({'date': -1}).limit(3);
+  
 
-    // let fireRiskYesterday = Weather.find({}, {_id: 0}).sort({'date': -1}).limit(1);
 
-    let fireRiskYesterday = 200;
-    // Формула розрахунку комплексного показника за Гуменюком В.
-    let fireRisk = (Kp * fireRiskYesterday) + Kw * T * (T - d);
-    console.log(fireRisk);
-    return fireRisk;
+   //let query = Weather.find({}, {_id: 0}).sort({'date': -1}).limit(1);
+
+  /*  let query = Weather.findOne({_id: id}, function (err, doc) { 
+       if (err) {console.log('Have some error!!! With model: Weather')} else {
+        console.log('Функція повернула: ' + doc.fireRisk);
+        return doc.fireRisk;
+       }
+   
+   }); */
+
+   
+   let query = Weather.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) { 
+    if (err) {console.log('Have some error!!! With model: Weather')} else {
+     console.log(doc.fireRisk);
+
+     fireRiskYesterday = doc.fireRisk;
+     console.log('fireRiskYesterday is: ' + fireRiskYesterday );
+         //  let fireRiskYesterday = 200;
+         //  Формула розрахунку комплексного показника за Гуменюком В.
+         let fireRisk = (Kp * fireRiskYesterday) + Kw * T * (T - d);
+         console.log("fireRisk for today is : " + fireRisk);
+         return fireRisk;
+    }
+});
+ 
+
+
+   
 };
 
 
