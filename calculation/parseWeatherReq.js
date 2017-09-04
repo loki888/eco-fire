@@ -60,7 +60,8 @@ const express = require("express"),
   var parseWeather = cron.schedule('* * * * * *', function(){
 
     console.log('Відповідь стороннього сервера з даними щодо погоди насьогодні');
-    F_risk_calc.fireRiskCalculation();
+    let a = F_risk_calc.fireRiskCalculation();
+    console.log('Hello from weather API: ' + a);
           // var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';
 
           // Рядком нижче необхідно заключити код в цикл який буде шукати міста в масиві даних і встроювати їх в url2, після чого писати в базу даних.

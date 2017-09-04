@@ -7,10 +7,11 @@ K_wind = require("./windCoeficient"),
 K_pertisipation = require("./patisipationCoeficient");
 //parseWeather = require('./parseWeatherReq');
 
+let a;
 
 exports.fireRiskCalculation = function(){
     // let Kw = K_wind.windCoefCulc();
-   // let Kp = K_pertisipation.pertisipationCoefCulc();
+    // let Kp = K_pertisipation.pertisipationCoefCulc();
     // let T = temperature;
     // let d = dewpoint;
     let Kw = 0.8;
@@ -18,6 +19,7 @@ exports.fireRiskCalculation = function(){
     let T = 15.6;
     let d = 7;
     let fireRiskYesterday;
+    let fireRisk;
     //let query = Weather.find({}, {_id: 0}).sort({'date': -1}).limit(3);
   
 
@@ -32,8 +34,8 @@ exports.fireRiskCalculation = function(){
    
    }); */
 
-   
-   let query = Weather.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) { 
+    
+    Weather.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) { 
     if (err) {console.log('Have some error!!! With model: Weather')} else {
      console.log(doc.fireRisk);
 
@@ -41,15 +43,21 @@ exports.fireRiskCalculation = function(){
      console.log('fireRiskYesterday is: ' + fireRiskYesterday );
          //  let fireRiskYesterday = 200;
          //  Формула розрахунку комплексного показника за Гуменюком В.
-         let fireRisk = (Kp * fireRiskYesterday) + Kw * T * (T - d);
+         fireRisk = (Kp * fireRiskYesterday) + Kw * T * (T - d);
          console.log("fireRisk for today is : " + fireRisk);
-         return fireRisk;
+        // return fireRisk;
+        a = fireRisk;
     }
-});
- 
-
-
    
+    // return fireRisk;
+}); 
+
+
+
+
+console.log('Hello from parent function --' + a);
+return a;
+
 };
 
 
