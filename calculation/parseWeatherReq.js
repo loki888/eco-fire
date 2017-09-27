@@ -60,12 +60,12 @@ const express = require("express"),
   var parseWeather = cron.schedule('* * * * * *', function(){
 
     console.log('Відповідь стороннього сервера з даними щодо погоди насьогодні');
-    let a = F_risk_calc.fireRiskCalculation();
-    console.log('Hello from weather API: ' + a);
-          // var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';
+    let setFireRisk = F_risk_calc.fireRiskCalculation();
+    console.log('Hello from weather API setFireRisk at the moment: ' + setFireRisk);
+          var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';
 
           // Рядком нижче необхідно заключити код в цикл який буде шукати міста в масиві даних і встроювати їх в url2, після чого писати в базу даних.
-/*           axios.get(url2)
+           axios.get(url2)
           .then(function (response) {
             //відразу отримавши дані слід провести розрахунок пожежного ризику і додати до документу бази даних на льоту у змінну
             // змінну додати разом із погодними змінними до об'єкту і всі їх разом записати в новий документ, який зберегти у коллекцію.
@@ -91,6 +91,7 @@ const express = require("express"),
             currentWeather.humidity       = humidity;
             currentWeather.dewpoint       = dewpoint;
             currentWeather.windSpeed      = (windSpeed * 1000) / 3600;  // швидкість вітру в метрах за секунду
+            currentWeather.fireRisk      = setFireRisk;
 
 
             currentWeather.save(function(err, weather){
@@ -104,7 +105,7 @@ const express = require("express"),
           })
           .catch(function (error) {
             console.log(error);
-          }); */
+          }); 
        
           
        }); 

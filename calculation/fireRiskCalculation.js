@@ -20,6 +20,7 @@ exports.fireRiskCalculation = function(){
     let d = 7;
     let fireRiskYesterday;
     let fireRisk;
+    
     //let query = Weather.find({}, {_id: 0}).sort({'date': -1}).limit(3);
   
 
@@ -46,7 +47,7 @@ exports.fireRiskCalculation = function(){
          fireRisk = (Kp * fireRiskYesterday) + Kw * T * (T - d);
          console.log("fireRisk for today is : " + fireRisk);
         // return fireRisk;
-        a = fireRisk;
+         a = fireRisk;
     }
    
     // return fireRisk;
