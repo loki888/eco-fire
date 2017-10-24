@@ -55,13 +55,12 @@ const express = require("express"),
 
 
 
+//Set cron task to start this requests loop on  11:00  everyday:
+//const  parseWeather = cron.schedule(' 11 * * *', function(){});
 
+  var parseWeather = cron.schedule('*/4 * * * * *', function(){
 
-  var parseWeather = cron.schedule('* * * * * *', function(){
-
-    console.log('Відповідь стороннього сервера з даними щодо погоди насьогодні');
-    let setFireRisk = F_risk_calc.fireRiskCalculation();
-    console.log('Hello from weather API setFireRisk at the moment: ' + setFireRisk);
+    
           var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';
 
           // Рядком нижче необхідно заключити код в цикл який буде шукати міста в масиві даних і встроювати їх в url2, після чого писати в базу даних.
@@ -70,7 +69,7 @@ const express = require("express"),
             //відразу отримавши дані слід провести розрахунок пожежного ризику і додати до документу бази даних на льоту у змінну
             // змінну додати разом із погодними змінними до об'єкту і всі їх разом записати в новий документ, який зберегти у коллекцію.
             
-            let temperature, district, perticipetion, humidity, dewpoint, windSpeed;
+            let temperature, district, perticipetion, humidity, dewpoint, windSpeed, setFireRisk;
             
 
             temperature   = response.data.current_observation.temp_c;
@@ -81,26 +80,41 @@ const express = require("express"),
             windSpeed     = response.data.current_observation.wind_kph;
 
             
+            console.log('Відповідь стороннього сервера з даними щодо погоди насьогодні');
+
+            //windSpeed, perticipetion, T, d
+             setFireRisk = F_risk_calc.fireRiskCalculation(windSpeed, perticipetion, temperature, dewpoint);
+            console.log('8888 Hello from weather API setFireRisk at the moment: 8888' +  setFireRisk);
            // console.log(`It's currently ${temperature}.`);
            
+
+
+            function saveCurrentWeather() {
+
 //Create a document from Weather Schema
-            let currentWeather = new Weather();
-            currentWeather.temperature    = temperature;
-            currentWeather.district       = district;
-            currentWeather.perticipetion  = perticipetion;
-            currentWeather.humidity       = humidity;
-            currentWeather.dewpoint       = dewpoint;
-            currentWeather.windSpeed      = (windSpeed * 1000) / 3600;  // швидкість вітру в метрах за секунду
-            currentWeather.fireRisk      = setFireRisk;
+let currentWeather = new Weather();
+currentWeather.temperature    = temperature;
+currentWeather.district       = district;
+currentWeather.perticipetion  = perticipetion;
+currentWeather.humidity       = humidity;
+currentWeather.dewpoint       = dewpoint;
+currentWeather.windSpeed      = (windSpeed * 1000) / 3600;  // швидкість вітру в метрах за секунду
+currentWeather.fireRisk      = setFireRisk;
 
 
-            currentWeather.save(function(err, weather){
-         if (err) {console.log('ERRROR!!!!');} else {
-             console.log(weather);
-             
-         }
-         
-            })
+              currentWeather.save(function(err, weather){
+                if (err) {console.log('ERRROR!!!!');} else {
+                    console.log("В базу даних йде це" + weather);
+                }
+                
+                   }) // end current weather save
+            }
+            
+            setTimeout(saveCurrentWeather, 2000);
+
+
+
+
 
           })
           .catch(function (error) {

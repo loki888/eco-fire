@@ -1,7 +1,7 @@
 'use strict';
 
 // ===================== Розрахунок Коефіцієнту обліку опадів поточного дня (К) =====================================
-var     perticipetion = 2.8;
+//var     perticipetion = 2.8;
 
 exports.pertisipationCoefCulc = function(perticipetion){
   let perticipetionToNumber = perticipetion - 0; // perticipetion приходить у вигляди строки, перетворюємо на числовий тип.

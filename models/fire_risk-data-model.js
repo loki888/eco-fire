@@ -12,8 +12,8 @@ const wetherSchema = new Schema({
     temperature: Number,
     dewpoint: Number,
     windSpeed: Number,
-    date: { type: Date, default: Date.now },
     fireRisk: { type: Number, default: 0 },
+    date: { type: Date, default: Date.now }
 });
 
 module.exports = momngoose.model('Weather', wetherSchema)
