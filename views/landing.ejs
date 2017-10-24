@@ -1,9 +1,233 @@
 <% include partials/header %>
 
-<h1>Landing Page!</h1>
 
-<p>Welcome to YelpCamp</p>
 
-<a href="/campgrounds">View All Campgrounds</a>
+
+
+<div id="map">
+    
+
+
+</div> <!-- END of div #map -->
+
+<div class="map-info">
+     <h3>Комплексний показник горимості (КП)</h3>
+     <h6>Класи пожежної небезпеки  в лісах за умовами погоди </h6>
+     <div class="fire-risk-wrapper">
+             
+             <div class="fire-risk-item">
+                 <div class="fire-risk-color-item color1"></div>
+                 <div class="fire-risk-item-info"> <b>І Клас:</b> КП менше 401 &#176;С</div>
+             </div>
+             <div class="fire-risk-item">
+                 <div class="fire-risk-color-item color2"></div>
+                 <div class="fire-risk-item-info"> <b>ІІ Клас:</b> КП 401-1000 &#176;С </div>
+             </div>
+             <div class="fire-risk-item">
+                 <div class="fire-risk-color-item color3"></div>
+                 <div class="fire-risk-item-info"> <b>ІІІ Клас:</b> КП 1001-3000 &#176;C</div>
+             </div>
+             <div class="fire-risk-item">
+                 <div class="fire-risk-color-item color4"></div>
+                 <div class="fire-risk-item-info"> <b>ІV Клас:</b> КП 3001-5000 &#176;C </div>
+             </div>
+             <div class="fire-risk-item">
+                 <div class="fire-risk-color-item color5"></div>
+                 <div class="fire-risk-item-info"> <b>V Клас:</b> КП понад 5000 &#176;С</div>
+             </div> 
+     </div>
+ </div>
+
+
+
+
+<script>
+ // Задаємо користувацьку карту, метод setView вказує початкові координати та масштаб
+ // Доцільно задавати початкові координати та масштаб залежно від геокоординат браузера користувача, який зайшов на ресурс.
+var mymap = L.map('map').setView([50.2033, 28.5191], 10);
+     L.geoJson(region).addTo(mymap);
+
+
+     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+     maxZoom: 18,
+     id: 'mapbox.streets',
+     accessToken: 'pk.eyJ1IjoibG9raS04ODgiLCJhIjoiY2o1bGFrNnVjMzNtcTJ3cDhjdmR6cGRvbCJ9.5DKo7E-uIsUn6W_YW56Fjg'
+}).addTo(mymap);
+
+
+
+/* var circle = L.circle([50.2516, 28.6764], {
+color: 'red',
+fillColor: '#f03',
+fillOpacity: 0.2,
+weight: 1,
+radius: 1500
+}).addTo(mymap); */
+
+
+
+
+
+/////////////////////////////////////////////////////////
+///////////////// SET COLORS ///////////////////////////
+////////////////////////////////////////////////////////
+var myStyle = {
+fillColor: 'red'
+};
+
+// #1a237e - темно синій І клас КП
+// #18ffff - блакийтний
+// #00e676 - зелений
+// #ffff00 - жовтий
+// #ff3d00 - червоний
+console.log(<%= foundFireRisk %>);
+let foundFireRisk = <%= foundFireRisk %>;
+function getColor(foundFireRisk) {                          // Класи КП:
+return foundFireRisk > 5000 ? '#ff3d00' :       // V    
+foundFireRisk > 3000  ? '#ffff00' :      // IV    
+foundFireRisk > 1000  ? '#00e676' :      // III  
+foundFireRisk > 400  ? '#18ffff' :       // II   
+                        '#1a237e';        // I    
+}
+//let d = 100; // Ця змінна умовна, надходить від сервера. Зараз статична для тестування.
+function style(feature) {
+return {
+ fillColor: getColor(foundFireRisk),
+ weight: 2,
+ opacity: 1,
+ color: 'white',
+ dashArray: '3',
+ fillOpacity: 0.8
+};
+}
+
+///////////////////Set some interactions/////////////////
+var geojson;
+
+function highlightFeature(e) {
+var layer = e.target;
+
+layer.setStyle({
+ weight: 5,
+ color: '#fff',
+ dashArray: '',
+ fillOpacity: 0.5
+});
+
+if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+ layer.bringToFront();
+}
+}
+
+function resetHighlight(e) {
+geojson.resetStyle(e.target);
+}
+
+function zoomToFeature(e) {
+mymap.fitBounds(e.target.getBounds());
+}
+
+function onEachFeaturer(feature, layer) {
+layer.on({
+ mouseover: highlightFeature,
+ mouseout: resetHighlight,
+ click: zoomToFeature
+});
+}
+
+geojson = L.geoJson(region, {
+onEachFeature: onEachFeaturer
+}).addTo(mymap);
+
+
+
+
+
+
+
+
+
+console.log(region.features[17].geometry.coordinates[0]);
+
+var myLines = region.features[17].geometry.coordinates;
+L.geoJSON(region, {
+style: function(feature) {
+ // У switch додати змінну по комплексному показнику, яка буде приходити з сервера.
+ switch (feature.properties.district) {
+     case 'Zhitomir':  return style(); //return {color: "red", fillColor: 'red'};
+ }
+}
+}).addTo(mymap); 
+
+////////////////////////////////////////////////////////////
+////////////// FEATURE TO BIND POPUPS //////////////////////
+///////////////////////////////////////////////////////////
+
+var myLayer = L.geoJson(region,  {
+/*      style: function (feature) {
+ // return feature.properties.style;
+ switch (feature.properties.district) {
+     case 'Zhitomir': return {color: "red", fillColor: 'red'};
+     //case undefined: return {color: "red", fillColor: 'red'};
+ }
+}, */ 
+onEachFeature: function (feature, layer) {
+
+ layer.on({
+ mouseover: highlightFeature,
+ mouseout: resetHighlight,
+ click: zoomToFeature
+});
+
+
+
+
+  if(feature.properties.district == undefined ){
+     layer.bindPopup('<p>Це альфа версія) <br />В ній задіяно тільки один район!</p>');
+  } else if (feature.properties.district == "Zhitomir") {layer.bindPopup(
+     `<h3 class="popup-fire-risk-title" style="text-align: center; color: #1c313a;"> ${feature.properties.district}</h3>
+     <div class="popup-fire-risk">
+<h4>Комплексний показник горимості</h4>
+<p class="popup-view-calculation"> КП(сьогодні)= <%= foundFireRisk %> </p>
+<p class="popup-view-calculation">КП(учора)= <%= FireRiskYesterday %> </p>
+<hr>
+<p class="popup-view-calculation">t= <%= temperature %></p>
+<p class="popup-view-calculation">dewpoint= <%= dewpoint %></p>
+<p class="popup-view-calculation">wind speed= <%= wind %></p>
+<p class="popup-view-calculation">precipitations= <%= perticipetion %></p>
+</div>
+     `);}
+     else {
+         layer.bindPopup('<p>Це альфа версія) <br />В ній задіяно тільки один район!</p>'); 
+     }
+     
+}
+});
+myLayer.addTo(mymap);
+
+
+console.log(`feature.properties.district = ${region.features[21].properties.district} `);
+
+
+
+
+// #1a237e - темно синій І клас КП
+// #18ffff - блакийтний
+// #00e676 - зелений
+// #ffff00 - жовтий
+// #ff3d00 - червоний
+
+</script>
+
+
+
+
+
+
+
 
 <% include partials/footer %>
+
+<!--    <link rel="stylesheet" href="/stylesheet/main.css">    -->
+<!--    <link rel="stylesheet" href="/dataGeoJson/map.geojson">    -->

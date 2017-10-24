@@ -57,8 +57,8 @@ const express = require("express"),
 
 //Set cron task to start this requests loop on  11:00  everyday:
 //const  parseWeather = cron.schedule(' 11 * * *', function(){});
-
-  var parseWeather = cron.schedule('*/4 * * * * *', function(){
+//   var parseWeather = cron.schedule('*/4 * * * * *', function(){
+  var parseWeather = cron.schedule('* * * * *', function(){
 
     
           var url2 = 'http://api.wunderground.com/api/f39cd86830e4de9e/conditions/q/ua/zhytomyr.json';

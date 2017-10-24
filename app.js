@@ -42,12 +42,66 @@ app.use(express.static(__dirname + "/public"));
 
 
 //Routs
-app.get("/", function(req, res) {
+/* app.get("/", function(req, res) {
     res.render("landing");
 });
 app.get("/map", function(req, res) {
     res.send("It will be a map soon!)");
-});
+}); */
+
+
+
+app.get("/", function(req, res) {
+    //find the campground with provided ID
+    Weather.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            let temperature, perticipetion, wind, dewpoint;
+           let foundFireRisk = doc.fireRisk;
+
+            //let foundFireRisk = 9000;
+            console.log("RENDERING THIS: " + foundFireRisk)
+                //render show template with that campground
+            res.render("landing", {
+                foundFireRisk: foundFireRisk,
+                FireRiskYesterday: 'Додатковий запит до бази даних...',
+                temperature: doc.temperature,
+                perticipetion: doc.perticipetion,
+                wind: doc.windSpeed,
+                dewpoint: doc.dewpoint
+            });
+        }
+    })
+
+
+
+
+   /*  Campground.findById(req.params.id).populate("comments").exec(function(err, foundFireRisk) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            let foundFireRisk = doc.fireRisk;
+            console.log(foundFireRisk)
+                //render show template with that campground
+            res.render("landing", {
+                foundFireRisk: foundFireRisk
+            });
+        }
+    }   ); */
+
+
+})
+
+
+
+
+
+
+
+
 
 
 

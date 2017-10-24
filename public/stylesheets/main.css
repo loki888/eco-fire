@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #1c1d1d;
+}
+
+.map-info {
+    min-width: 25vw;
+    width: 30vw;
+    max-height: 50vh;
+    min-height: 30vh;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    z-index: 9999;
+    padding: 0;
+
+    bottom: 0; /* Положение от нижнего края */
+    right: 0; /* Положение от правого края */
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    overflow: auto; 
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 5px;
+    border: 2px solid #18ffff;
+}
+
+.fire-risk-wrapper {
+    width: 100%;
+    margin-top: 4%;
+    margin-bottom: 5%;
+}
+.fire-risk-item {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    overflow: auto; 
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: stretch;
+    margin-bottom: 2px;
+}
+
+.fire-risk-color-item {
+    margin-right: 4%;
+    margin-left: 4%;
+    width: 80px;
+    height: 35px;
+    border: 1px solid #18ffff;
+}
+
+/*=========   typography ===========*/
+.map-info > h3,
+.map-info > h6 {
+    margin: 0;
+    padding: 0;
+}
+.map-info > h3 {
+    margin-top: 5px;
+}
+
+
+
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+
+.popup-fire-risk-title {
+    text-align: center;
+}
+
+/*=========   color pallete  ===========*/
+.color1 {
+    background-color: #1a237e;
+}
+
+.color2 {
+    background-color: #18ffff;
+}
+
+.color3 {
+    background-color: #00e676;
+}
+
+.color4 {
+    background-color: #ffff00;
+}
+
+.color5 {
+    background-color: #c30000;
+}
+
