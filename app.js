@@ -59,17 +59,17 @@ app.get("/", function(req, res) {
         }
         else {
             let temperature, perticipetion, wind, dewpoint;
-           let foundFireRisk = doc.fireRisk;
+           //let foundFireRisk = doc.fireRisk;
 
-            //let foundFireRisk = 9000;
+            let foundFireRisk = 9000;
             console.log("RENDERING THIS: " + foundFireRisk)
                 //render show template with that campground
             res.render("landing", {
-                foundFireRisk: foundFireRisk,
+                foundFireRisk: foundFireRisk.toFixed(1),
                 FireRiskYesterday: 'Додатковий запит до бази даних...',
                 temperature: doc.temperature,
                 perticipetion: doc.perticipetion,
-                wind: doc.windSpeed,
+                wind: doc.windSpeed.toFixed(1),
                 dewpoint: doc.dewpoint
             });
         }
